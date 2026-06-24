@@ -41,11 +41,13 @@ public class VendingMachine {
         drink.put(4,new Product("COFFEE", 2500,15));
 
     }
+ public void takeOrder(int num, int money){
+        if(checkStock(num)) makePayment(num,money);
+ }
 
-    boolean result = false;
-    public boolean takeOrder(int num){
-        result = drink.containsKey(num) && drink.get(num).stock > 0 ;
-        return result;
+    private boolean checkStock(int num){
+
+       return drink.containsKey(num) && drink.get(num).getCurrentStock() > 0 ;
     }
 
 /*
@@ -58,12 +60,12 @@ public class VendingMachine {
 *
   이때 필요한것은 어떤
  */
-    public void makePayment(int num, int money){
+    private void makePayment(int num, int money){
         Product target = drink.get(num);
         int change;
 
         if(target.price <= money) {
-            drink.get(num).reduceProduct();
+            target.reduceProduct();
             change = money-target.price;
             System.out.println("결제완료");
             System.out.println("거스름돈 :" + change+ "원");
@@ -73,7 +75,6 @@ public class VendingMachine {
             System.out.println("결제 불가 : 잔액이 부족합니다.");
             System.out.println("환불액 :" + change+ "원");
         }
-        System.out.println(change + "원");
     }
 
 
