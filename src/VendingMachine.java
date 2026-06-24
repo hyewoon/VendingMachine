@@ -41,8 +41,9 @@ public class VendingMachine {
         drink.put(4,new Product("COFFEE", 2500,15));
 
     }
- public void takeOrder(int num, int money){
-        if(checkStock(num)) makePayment(num,money);
+ public PaymentResult takeOrder(int num, int money){
+        if(checkStock(num)) return makePayment(num,money);
+        else return new PaymentResult(false,money);
  }
 
     private boolean checkStock(int num){
@@ -60,20 +61,14 @@ public class VendingMachine {
 *
   이때 필요한것은 어떤
  */
-    private void makePayment(int num, int money){
+    private PaymentResult makePayment(int num, int money){
         Product target = drink.get(num);
-        int change;
 
         if(target.price <= money) {
             target.reduceProduct();
-            change = money-target.price;
-            System.out.println("결제완료");
-            System.out.println("거스름돈 :" + change+ "원");
-
-        } else{
-            change = money;
-            System.out.println("결제 불가 : 잔액이 부족합니다.");
-            System.out.println("환불액 :" + change+ "원");
+            return new PaymentResult(true, money - target.price);
+        }else{
+            return new PaymentResult(false,money);
         }
     }
 
