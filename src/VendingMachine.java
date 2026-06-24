@@ -31,34 +31,51 @@ public class VendingMachine {
         //있으면 true
        return (drink.containsKey(product)&& drink.get(product)>0);
     }*/
+    ;
+    HashMap<Integer,Product> drink = new HashMap<>();
 
-    HashMap<Integer,Product> product = new HashMap<>();
-    boolean result = false;
+    int balance = 0;
+
     public VendingMachine(){
-        product.put(1,new Product("COLA", 2000,10));
-        product.put(2,new Product("SIDER", 1500,8));
-        product.put(3,new Product("WATER", 2000,20));
-        product.put(4,new Product("COFFEE", 2500,15));
+        drink.put(1,new Product("COLA", 2000,10));
+        drink.put(2,new Product("SIDER", 1500,8));
+        drink.put(3,new Product("WATER", 2000,20));
+        drink.put(4,new Product("COFFEE", 2500,15));
 
     }
 
+    boolean result = false;
     public boolean takeOrder(int num){
-        result = product.containsKey(num) && product.get(num).stock > 0 ;
+        result = drink.containsKey(num) && drink.get(num).stock > 0 ;
         return result;
     }
 
 /*
 * 주문확인 후 결제릃 한다.
-* */
-    public void makePayment(int num,int money){
-        int temp = product.get(num).price;
-      if(money < temp){
-          System.out.println("잔액이 부족합니다.");
-      }else if(money == temp){
-          //재고 하나 줄이기
-      }else {
-          //거스름돈 주기
-      }
+* 1. 고객이 넣은 금액을 확인하다. -> 이게 파라미터로 들어온다.
+* 2. 그 금액을 상품의 가격과 비교한다. -> 고객이 선택한 상품을 통해서 그 가격에 접근 Product 객체의 상품name에 접근
+*  -> 상품 가격 > 금액 -> 결제 불가
+*  -> 상품 가격 = 금액 -> 결제 완료 /거스름돈 X
+*  -> 상품 가격 < 금액 -> 결제 완료 / 거스름돈 0
+*
+  이때 필요한것은 어떤
+ */
+    public void makePayment(int num, int money){
+        Product target = drink.get(num);
+        int change = 0;
+
+        if(target.price <= money) {
+            drink.get(num).reduceProduct();
+            change = money-target.price;
+            System.out.println("결제완료");
+            System.out.println("거스름돈 :" + change+ "원");
+
+        } else{
+            change = money;
+            System.out.println("결제 불가 : 잔액이 부족합니다.");
+            System.out.println("환불액 :" + change+ "원");
+        }
+        System.out.println(change + "원");
     }
 
 

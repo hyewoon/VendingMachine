@@ -8,4 +8,17 @@ public class Product {
         this.price = price;
         this.stock = stock;
     }
+
+    public void reduceProduct(){
+       stock--;
+    }
+
+    public void increaseProduct(){
+        stock++;
+    }
+
+    public int getCurrentStock(){
+    return stock;
+    }
+
 }
