@@ -1,6 +1,5 @@
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 
 public class VendingMachine {
     //자판기 해야 할 일
@@ -31,10 +30,9 @@ public class VendingMachine {
         //있으면 true
        return (drink.containsKey(product)&& drink.get(product)>0);
     }*/
-    ;
+
     HashMap<Integer,Product> drink = new HashMap<>();
 
-    int balance = 0;
 
     public VendingMachine(){
         drink.put(1,new Product("COLA", 2000,10));
@@ -62,7 +60,7 @@ public class VendingMachine {
  */
     public void makePayment(int num, int money){
         Product target = drink.get(num);
-        int change = 0;
+        int change;
 
         if(target.price <= money) {
             drink.get(num).reduceProduct();
