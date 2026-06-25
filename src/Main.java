@@ -2,8 +2,10 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Hello world!");
-        VendingMachine vendingMachine = new VendingMachine();
-        vendingMachine.takeOrder(1,5000);
+        VendingMachineView vendingMachineView = new VendingMachineView();
+        vendingMachineView.showMenu();
+/*        VendingMachine vendingMachine = new VendingMachine();
+        vendingMachine.takeOrder(1,5000);*/
 
     }
 
