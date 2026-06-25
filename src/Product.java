@@ -21,4 +21,12 @@ public class Product {
     return stock;
     }
 
+    public String getProductName(){
+        return name;
+    }
+
+    public int getProductPrice(){
+        return price;
+    }
+
 }
