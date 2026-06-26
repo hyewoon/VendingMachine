@@ -1,4 +1,6 @@
 public class PaymentResult {
+    //true-> 재고존재 한다
+    //false-> 재고 없다
     boolean success;
     int change;
 
@@ -6,5 +8,4 @@ public class PaymentResult {
         this.success = success;
         this.change = change;
     }
-
 }
