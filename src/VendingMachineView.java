@@ -21,44 +21,51 @@ public class VendingMachineView {
     }
 
     public void makeOrder() {
+        int menu = 0;
+        int money = 0;
+        int input = 0;
 
-        while(true){
-
-            int money = 0;
-            int input = 0;
-            int menu = 0;
+        while (true) {
             showMenu();
             //입력값 받기
-            System.out.println("번호를 선택하세요.");
-            try{
-             menu = scanner.nextInt();
-               if(menu< 1 || menu > 4) {
-                    System.out.println("메뉴번호를 다시 선택해주세요. 유효하지 않는 번호입니다.");
-                    continue;
-                }
-            }catch (InputMismatchException e){
-                System.out.println("메뉴 번호를 다시 선택해주세요. 숫자만 입력해주세요");
-                scanner.nextLine();
-                continue;
-            }
-                System.out.println("금액을 투입하세요");
-                 money = scanner.nextInt();
+            menu = checkValidation(1, 4, "번호를 선택하세요");
 
-                    PaymentResult result = vendingMachine.takeOrder(menu, money);
-                    showResult(result);
+            money = checkValidation(0, 1000000, "금액을 투입하세요");
 
-                System.out.println("주문을 계속 하시겠습니까?");
-                System.out.println("번호를 입력하세요");
-                System.out.println("1. yes  2.no");
+            PaymentResult result = vendingMachine.takeOrder(menu, money);
+            showResult(result);
 
-                    input = scanner.nextInt();
-                    if(input == 2) break;
+            input = checkValidation(1, 2, "주문을 계속하시겠습니까? 1.YES 2.NO");
+            if (input == 2) break;
 
         }
+    }
 
 
-
-
+    private int checkValidation(int min, int max, String message) {
+        while (true) {
+            System.out.println(message);
+            String inputValue = scanner.nextLine();
+            // 빈 입력 먼저 거르기
+            if (inputValue.trim().isEmpty()) {
+                System.out.println("입력값이 없습니다.");
+                continue;
+            }
+            //숫자로 변환-> 이 값을 메뉴/가격/되돌아가기/ 무슨의미로 보는가?
+            //메뉴랑-가격의 입력값은 하나의 takeOrder()의 파라미터로 넘어간다. 하나로 묶을 수 있다.
+            try {
+                int tempNumber = 0;
+                tempNumber = Integer.parseInt(inputValue.trim());
+                //menu, price, choice
+                if (tempNumber < min || tempNumber > max) {
+                    System.out.println("유효하지 않은 번호입니다.");
+                    continue;
+                }
+                return tempNumber;
+            } catch (NumberFormatException e) {
+                System.out.println(" 숫자만 입력해주세요.");
+            }
+        }
     }
 
     private void showResult(PaymentResult result) {
