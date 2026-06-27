@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -22,23 +23,37 @@ public class VendingMachineView {
     public void makeOrder() {
 
         while(true){
+
+            int money = 0;
+            int input = 0;
+            int menu = 0;
             showMenu();
             //입력값 받기
             System.out.println("번호를 선택하세요.");
-            int menu = scanner.nextInt();
+            try{
+             menu = scanner.nextInt();
+               if(menu< 1 || menu > 4) {
+                    System.out.println("메뉴번호를 다시 선택해주세요. 유효하지 않는 번호입니다.");
+                    continue;
+                }
+            }catch (InputMismatchException e){
+                System.out.println("메뉴 번호를 다시 선택해주세요. 숫자만 입력해주세요");
+                scanner.nextLine();
+                continue;
+            }
+                System.out.println("금액을 투입하세요");
+                 money = scanner.nextInt();
 
-            System.out.println("금액을 투입하세요");
-            int money = scanner.nextInt();
+                    PaymentResult result = vendingMachine.takeOrder(menu, money);
+                    showResult(result);
 
-            PaymentResult result = vendingMachine.takeOrder(menu, money);
-            showResult(result);
+                System.out.println("주문을 계속 하시겠습니까?");
+                System.out.println("번호를 입력하세요");
+                System.out.println("1. yes  2.no");
 
-            System.out.println("주문을 계속 하시겠습니까?");
-            System.out.println("번호를 입력하세요");
-            System.out.println("1. yes  2.no");
+                    input = scanner.nextInt();
+                    if(input == 2) break;
 
-            int input = scanner.nextInt();
-            if(input == 2) break;
         }
 
 
