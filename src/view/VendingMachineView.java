@@ -1,6 +1,12 @@
+package view;
 
 import java.util.Map;
 import java.util.Scanner;
+
+import domain.OrderStatus;
+import domain.PaymentResult;
+import domain.Product;
+import domain.VendingMachine;
 
 public class VendingMachineView {
 
@@ -17,7 +23,6 @@ public class VendingMachineView {
 
             if (inputValue == 1) {
                 makeOrder();
-                continue;
             } else if (inputValue == 0) break;
             else System.out.println("다시 입력해 주세요.");
         }
@@ -86,18 +91,18 @@ public class VendingMachineView {
 
 
     private void showResult(PaymentResult result) {
-        switch (result.status) {
+        switch (result.getStatus()) {
             case SUCCESS -> {
                 System.out.println("결제완료");
-                System.out.println("거스름돈:" + result.change + "원");
+                System.out.println("거스름돈:" + result.getChange() + "원");
             }
             case OUT_OF_STOCK -> {
                 System.out.println("결제불가 : 재고가 부족합니다.");
-                System.out.println("환불액:" + result.change + "원");
+                System.out.println("환불액:" + result.getChange() + "원");
             }
             case NOT_ENOUGH_MONEY -> {
                 System.out.println("결제불가 : 잔액이 부족합니다.");
-                System.out.println("환불액:" + result.change + "원");
+                System.out.println("환불액:" + result.getChange() + "원");
             }
         }
 

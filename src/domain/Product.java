@@ -1,3 +1,5 @@
+
+package domain;
 public class Product {
     String name;
     int price;
@@ -27,6 +29,10 @@ public class Product {
 
     public int getProductPrice(){
         return price;
+    }
+
+    public Product getProduct(){
+        return this;
     }
 
 }

@@ -1,5 +1,6 @@
 
-import java.util.HashMap;
+package domain;
+
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -32,7 +33,6 @@ public class VendingMachine {
         //있으면 true
        return (drink.containsKey(product)&& drink.get(product)>0);
     }*/
-
     Map<Integer, Product> drink = new TreeMap<>();
 
 
