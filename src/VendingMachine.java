@@ -37,7 +37,7 @@ public class VendingMachine {
 
 
     public VendingMachine() {
-        drink.put(1, new Product("COLA", 2000, 10));
+        drink.put(1, new Product("COLA", 2000, 0));
         drink.put(2, new Product("SIDER", 1500, 8));
         drink.put(3, new Product("WATER", 2000, 20));
         drink.put(4, new Product("COFFEE", 2500, 15));
@@ -56,21 +56,25 @@ public class VendingMachine {
       }
     }*/
 
-    public Map<Integer, Product> getMenu(){
+    public Map<Integer, Product> getMenu() {
         return drink;
     }
 
-
+    //재고 부족일때, 결제 실패, 환불
     public PaymentResult takeOrder(int num, int money) {
-        if (checkStock(num)) return makePayment(num, money);
-        else return new PaymentResult(false, money);
+        if (!checkStock(num)) {
+            return new PaymentResult(OrderStatus.OUT_OF_STOCK, money);
+        } else return makePayment(num, money);
     }
-
 
     private boolean checkStock(int num) {
-
         return drink.containsKey(num) && drink.get(num).getCurrentStock() > 0;
     }
+
+    public boolean checkKey(int num) {
+        return drink.containsKey(num);
+    }
+
 
     /*
     * 주문확인 후 결제릃 한다.
@@ -87,9 +91,9 @@ public class VendingMachine {
 
         if (target.price <= money) {
             target.reduceProduct();
-            return new PaymentResult(true, money - target.price);
+            return new PaymentResult(OrderStatus.SUCCESS, money - target.price);
         } else {
-            return new PaymentResult(false, money);
+            return new PaymentResult(OrderStatus.NOT_ENOUGH_MONEY, money);
         }
     }
 
