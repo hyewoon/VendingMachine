@@ -3,10 +3,9 @@ package view;
 import java.util.Map;
 import java.util.Scanner;
 
-import domain.OrderStatus;
 import domain.PaymentResult;
-import domain.Product;
-import domain.VendingMachine;
+import vendingmachine.Product;
+import vendingmachine.VendingMachine;
 
 public class VendingMachineView {
 

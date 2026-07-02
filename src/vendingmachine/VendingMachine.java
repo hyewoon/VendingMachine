@@ -1,5 +1,8 @@
 
-package domain;
+package vendingmachine;
+
+import domain.OrderStatus;
+import domain.PaymentResult;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -84,7 +87,6 @@ public class VendingMachine {
     *  -> 상품 가격 = 금액 -> 결제 완료 /거스름돈 X
     *  -> 상품 가격 < 금액 -> 결제 완료 / 거스름돈 0
     *
-      이때 필요한것은 어떤
      */
     private PaymentResult makePayment(int num, int money) {
         Product target = drink.get(num);

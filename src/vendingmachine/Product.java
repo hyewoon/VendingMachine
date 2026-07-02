@@ -1,5 +1,5 @@
 
-package domain;
+package vendingmachine;
 public class Product {
     String name;
     int price;
